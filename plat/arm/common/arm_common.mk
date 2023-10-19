@@ -138,10 +138,12 @@ ENABLE_PSCI_STAT		:=	1
 ENABLE_PMF			:=	1
 
 # Override the standard libc with optimised libc_asm
+ifeq (${NO_LIBC},0)
 OVERRIDE_LIBC			:=	1
 ifeq (${OVERRIDE_LIBC},1)
     include lib/libc/libc_asm.mk
 endif
+endif # NO_LIBC
 
 # On ARM platforms, separate the code and read-only data sections to allow
 # mapping the former as executable and the latter as execute-never.
@@ -273,7 +275,9 @@ BL1_SOURCES		+=	${FCONF_SOURCES} ${FCONF_DYN_SOURCES}
 BL2_SOURCES		+=	${FCONF_SOURCES} ${FCONF_DYN_SOURCES}
 
 # Add `libfdt` and Arm common helpers required for Dynamic Config
+ifneq ($(USE_LIBFDT),0)
 include lib/libfdt/libfdt.mk
+endif
 
 DYN_CFG_SOURCES		+=	plat/arm/common/arm_dyn_cfg.c		\
 				plat/arm/common/arm_dyn_cfg_helpers.c	\

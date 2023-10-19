@@ -72,7 +72,11 @@ BL31_SOURCES	+=	${RK_GIC_SOURCES}				\
 			${RK_PLAT_SOC}/drivers/dram/suspend.c
 
 include lib/coreboot/coreboot.mk
-include lib/libfdt/libfdt.mk
+
+$(warning USE_LIBFDT $(USE_LIBFDT))
+ifneq ($(USE_LIBFDT),0)
+# include lib/libfdt/libfdt.mk
+endif
 
 $(eval $(call add_define,PLAT_EXTRA_LD_SCRIPT))
 

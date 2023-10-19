@@ -246,8 +246,8 @@ ASFLAGS		+=	$(march-directive)
 ###############################################################################
 # General warnings
 WARNINGS		:=	-Wall -Wmissing-include-dirs -Wunused	\
-				-Wdisabled-optimization -Wvla -Wshadow	\
-				-Wredundant-decls
+				-Wdisabled-optimization -Wvla -Wshadow
+#				-Wredundant-decls
 # stricter warnings
 WARNINGS		+=	-Wextra -Wno-trigraphs
 # too verbose for generic build
@@ -322,11 +322,21 @@ ifneq (${E},0)
 	ERRORS := -Werror
 endif #(E)
 
+USE_STD_INC ?= 1
+
+ifneq ($(USE_STD_INC),0)
+	STD_INC := -nostdinc
+endif
+
+USE_LIBFDT ?= 1
+
+export USE_LIBFDT
+
 ################################################################################
 # Compiler and Linker Directives
 ################################################################################
-CPPFLAGS		=	${DEFINES} ${INCLUDES} ${MBEDTLS_INC} -nostdinc	\
-				$(ERRORS) $(WARNINGS)
+CPPFLAGS		=	${DEFINES} ${INCLUDES} ${MBEDTLS_INC}		\
+				$(STD_INC) $(ERRORS) $(WARNINGS)
 ASFLAGS			+=	$(CPPFLAGS)                 			\
 				-ffreestanding -Wa,--fatal-warnings
 TF_CFLAGS		+=	$(CPPFLAGS) $(TF_CFLAGS_$(ARCH))		\
@@ -774,11 +784,17 @@ ifeq (${ARCH},aarch32)
 endif #(ARCH=aarch32)
 
 ################################################################################
-# Include libc if not overridden
+# Include libc if not overridden, or omission is requested
 ################################################################################
+USE_LIBC ?= 1
+
+ifneq (${USE_LIBC},0)
+$(warning OVERRIDE_LIBC $(OVERRIDE_LIBC))
 ifeq (${OVERRIDE_LIBC},0)
+$(warning libc)
 include lib/libc/libc.mk
 endif
+endif # USE_LIBC
 
 ################################################################################
 # Check incompatible options and dependencies
