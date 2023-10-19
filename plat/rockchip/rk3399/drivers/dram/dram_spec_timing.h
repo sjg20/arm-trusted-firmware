@@ -55,7 +55,7 @@ enum ddr3_speed_rate {
 	DDR3_DEFAULT = 21,
 };
 
-#define max(a, b)  (((a) > (b)) ? (a) : (b))
+// #define max(a, b)  (((a) > (b)) ? (a) : (b))
 #define range(mi, val, ma)  (((ma) > (val)) ? (max(mi, val)) : (ma))
 
 struct dram_timing_t {

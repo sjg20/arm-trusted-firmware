@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#ifndef _LINUX_CONST_H
 #ifndef	ARM_TRUSTED_FIRMWARE_EXPORT_LIB_UTILS_DEF_EXP_H
 #define	ARM_TRUSTED_FIRMWARE_EXPORT_LIB_UTILS_DEF_EXP_H
 
@@ -39,3 +40,4 @@
 #endif
 
 #endif /* ARM_TRUSTED_FIRMWARE_EXPORT_LIB_UTILS_DEF_EXP_H */
+#endif /* _LINUX_CONST_H */

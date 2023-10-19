@@ -294,14 +294,14 @@ static void ddr3_get_parameter(struct timing_related_config *timing_config,
 				| DDR3_CL(pdram_timing->cl)
 				| DDR3_WR(tmp);
 	tmp = ((DDR3_TRTP * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->trtp = max(4, tmp);
+	pdram_timing->trtp = max(4U, tmp);
 	pdram_timing->trc =
 		(((ddr3_trc_tfaw[ddr_speed_bin] >> 8) * nmhz + 999) / 1000);
 	tmp = ((DDR3_TRRD * nmhz + 999) / 1000);
-	pdram_timing->trrd = max(4, tmp);
+	pdram_timing->trrd = max(4U, tmp);
 	pdram_timing->tccd = DDR3_TCCD;
 	tmp = ((DDR3_TWTR * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->twtr = max(4, tmp);
+	pdram_timing->twtr = max(4U, tmp);
 	pdram_timing->trtw = DDR3_TRTW;
 	pdram_timing->tras_max = 9 * pdram_timing->trefi;
 	pdram_timing->tras_min = ((DDR3_TRAS * nmhz + (nmhz >> 1) + 999)
@@ -321,38 +321,38 @@ static void ddr3_get_parameter(struct timing_related_config *timing_config,
 	else
 		tmp = DDR3_TRFC_8GBIT;
 	pdram_timing->trfc = (tmp * nmhz + 999) / 1000;
-	pdram_timing->txsnr = max(5, (((tmp + 10) * nmhz + 999) / 1000));
+	pdram_timing->txsnr = max(5U, (((tmp + 10) * nmhz + 999) / 1000));
 	pdram_timing->tdqsck_max = 0;
 	/*pd and sr*/
 	pdram_timing->txsr = DDR3_TDLLK;
 	tmp = ((DDR3_TXP * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->txp = max(3, tmp);
+	pdram_timing->txp = max(3U, tmp);
 	tmp = ((DDR3_TXPDLL * nmhz + 999) / 1000);
-	pdram_timing->txpdll = max(10, tmp);
+	pdram_timing->txpdll = max(10U, tmp);
 	pdram_timing->tdllk = DDR3_TDLLK;
 	if (nmhz >= 533)
 		tmp = ((DDR3_TCKE_533MHZ * nmhz + 999) / 1000);
 	else
 		tmp = ((DDR3_TCKE_400MHZ * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->tcke = max(3, tmp);
+	pdram_timing->tcke = max(3U, tmp);
 	pdram_timing->tckesr = (pdram_timing->tcke + 1);
 	tmp = ((DDR3_TCKSRE * nmhz + 999) / 1000);
-	pdram_timing->tcksre = max(5, tmp);
-	pdram_timing->tcksrx = max(5, tmp);
+	pdram_timing->tcksre = max(5U, tmp);
+	pdram_timing->tcksrx = max(5U, tmp);
 	/*mode register timing*/
 	tmp = ((DDR3_TMOD * nmhz + 999) / 1000);
-	pdram_timing->tmod = max(12, tmp);
+	pdram_timing->tmod = max(12U, tmp);
 	pdram_timing->tmrd = DDR3_TMRD;
 	pdram_timing->tmrr = 0;
 	/*ODT*/
 	pdram_timing->todton = pdram_timing->cwl - 2;
 	/*ZQ*/
 	tmp = ((DDR3_TZQINIT * nmhz + 999) / 1000);
-	pdram_timing->tzqinit = max(512, tmp);
+	pdram_timing->tzqinit = max(512U, tmp);
 	tmp = ((DDR3_TZQCS * nmhz + 999) / 1000);
-	pdram_timing->tzqcs = max(64, tmp);
+	pdram_timing->tzqcs = max(64U, tmp);
 	tmp = ((DDR3_TZQOPER * nmhz + 999) / 1000);
-	pdram_timing->tzqoper = max(256, tmp);
+	pdram_timing->tzqoper = max(256U, tmp);
 	/* write leveling */
 	pdram_timing->twlmrd = DDR3_TWLMRD;
 	pdram_timing->twldqsen = DDR3_TWLDQSEN;
@@ -496,35 +496,35 @@ static void lpddr2_get_parameter(struct timing_related_config *timing_config,
 							/ 1000;
 	/* base timing */
 	tmp = ((LPDDR2_TRCD * nmhz + 999) / 1000);
-	pdram_timing->trcd = max(3, tmp);
+	pdram_timing->trcd = max(3U, tmp);
 	/*
 	 * tRPpb, max(3tCK, 15ns(Fast) 18ns(Typ) 24ns(Slow),
 	 */
 	trppb_tmp = ((LPDDR2_TRP_PB * nmhz + 999) / 1000);
-	trppb_tmp = max(3, trppb_tmp);
+	trppb_tmp = max(3U, trppb_tmp);
 	pdram_timing->trppb = trppb_tmp;
 	/*
 	 * tRPab, max(3tCK, 4-bank:15ns(Fast) 18ns(Typ) 24ns(Slow),
 	 *	8-bank:18ns(Fast) 21ns(Typ) 27ns(Slow))
 	 */
 	trp_tmp = ((LPDDR2_TRP_AB_8_BANK * nmhz + 999) / 1000);
-	trp_tmp = max(3, trp_tmp);
+	trp_tmp = max(3U, trp_tmp);
 	pdram_timing->trp = trp_tmp;
 	twr_tmp = ((LPDDR2_TWR * nmhz + 999) / 1000);
-	twr_tmp = max(3, twr_tmp);
+	twr_tmp = max(3U, twr_tmp);
 	pdram_timing->twr = twr_tmp;
 	bl_tmp = (pdram_timing->bl == 16) ? LPDDR2_BL16 :
 			((pdram_timing->bl == 8) ? LPDDR2_BL8 : LPDDR2_BL4);
 	pdram_timing->mr[1] = bl_tmp | LPDDR2_N_WR(twr_tmp);
 	tmp = ((LPDDR2_TRTP * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->trtp = max(2, tmp);
+	pdram_timing->trtp = max(2U, tmp);
 	tras_tmp = ((LPDDR2_TRAS * nmhz + 999) / 1000);
-	tras_tmp = max(3, tras_tmp);
+	tras_tmp = max(3U, tras_tmp);
 	pdram_timing->tras_min = tras_tmp;
 	pdram_timing->tras_max = ((LPDDR2_TRAS_MAX * nmhz + 999) / 1000);
 	pdram_timing->trc = (tras_tmp + trp_tmp);
 	tmp = ((LPDDR2_TRRD * nmhz + 999) / 1000);
-	pdram_timing->trrd = max(2, tmp);
+	pdram_timing->trrd = max(2U, tmp);
 	pdram_timing->tccd = LPDDR2_TCCD;
 	/* tWTR, max(2tCK, 7.5ns(533-266MHz)  10ns(200-166MHz)) */
 	if (nmhz > 200)
@@ -532,7 +532,7 @@ static void lpddr2_get_parameter(struct timing_related_config *timing_config,
 			  999) / 1000);
 	else
 		tmp = ((LPDDR2_TWTR_LITTLE_200MHZ * nmhz + 999) / 1000);
-	pdram_timing->twtr = max(2, tmp);
+	pdram_timing->twtr = max(2U, tmp);
 	pdram_timing->trtw = LPDDR2_TRTW;
 	if (nmhz <= 200)
 		pdram_timing->tfaw = (LPDDR2_TFAW_LITTLE_200MHZ * nmhz + 999)
@@ -562,12 +562,12 @@ static void lpddr2_get_parameter(struct timing_related_config *timing_config,
 					/ 1000);
 	/* pd and sr */
 	tmp = ((LPDDR2_TXP * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->txp = max(2, tmp);
+	pdram_timing->txp = max(2U, tmp);
 	pdram_timing->txpdll = LPDDR2_TXPDLL;
 	pdram_timing->tdllk = LPDDR2_TDLLK;
 	pdram_timing->tcke = LPDDR2_TCKE;
 	tmp = ((LPDDR2_TCKESR * nmhz + 999) / 1000);
-	pdram_timing->tckesr = max(3, tmp);
+	pdram_timing->tckesr = max(3U, tmp);
 	pdram_timing->tcksre = LPDDR2_TCKSRE;
 	pdram_timing->tcksrx = LPDDR2_TCKSRX;
 	/* mode register timing */
@@ -577,11 +577,11 @@ static void lpddr2_get_parameter(struct timing_related_config *timing_config,
 	/* ZQ */
 	pdram_timing->tzqinit = (LPDDR2_TZQINIT * nmhz + 999) / 1000;
 	tmp = ((LPDDR2_TZQCS * nmhz + 999) / 1000);
-	pdram_timing->tzqcs = max(6, tmp);
+	pdram_timing->tzqcs = max(6U, tmp);
 	tmp = ((LPDDR2_TZQCL * nmhz + 999) / 1000);
-	pdram_timing->tzqoper = max(6, tmp);
+	pdram_timing->tzqoper = max(6U, tmp);
 	tmp = ((LPDDR2_TZQRESET * nmhz + 999) / 1000);
-	pdram_timing->tzqreset = max(3, tmp);
+	pdram_timing->tzqreset = max(3U, tmp);
 }
 
 #define LPDDR3_TINIT1		(100) /* ns */
@@ -763,15 +763,15 @@ static void lpddr3_get_parameter(struct timing_related_config *timing_config,
 	pdram_timing->trefi = (LPDDR3_TREFI_3_9_US * nmhz + 999) / 1000;
 	/* base timing */
 	tmp = ((LPDDR3_TRCD * nmhz + 999) / 1000);
-	pdram_timing->trcd = max(3, tmp);
+	pdram_timing->trcd = max(3U, tmp);
 	trppb_tmp = ((LPDDR3_TRP_PB * nmhz + 999) / 1000);
-	trppb_tmp = max(3, trppb_tmp);
+	trppb_tmp = max(3U, trppb_tmp);
 	pdram_timing->trppb = trppb_tmp;
 	trp_tmp = ((LPDDR3_TRP_AB * nmhz + 999) / 1000);
-	trp_tmp = max(3, trp_tmp);
+	trp_tmp = max(3U, trp_tmp);
 	pdram_timing->trp = trp_tmp;
 	twr_tmp = ((LPDDR3_TWR * nmhz + 999) / 1000);
-	twr_tmp = max(4, twr_tmp);
+	twr_tmp = max(4U, twr_tmp);
 	pdram_timing->twr = twr_tmp;
 	if (twr_tmp <= 6)
 		twr_tmp = 6;
@@ -789,20 +789,20 @@ static void lpddr3_get_parameter(struct timing_related_config *timing_config,
 	bl_tmp = LPDDR3_BL8;
 	pdram_timing->mr[1] = bl_tmp | LPDDR3_N_WR(twr_tmp);
 	tmp = ((LPDDR3_TRTP * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->trtp = max(4, tmp);
+	pdram_timing->trtp = max(4U, tmp);
 	tras_tmp = ((LPDDR3_TRAS * nmhz + 999) / 1000);
-	tras_tmp = max(3, tras_tmp);
+	tras_tmp = max(3U, tras_tmp);
 	pdram_timing->tras_min = tras_tmp;
 	pdram_timing->trc = (tras_tmp + trp_tmp);
 	tmp = ((LPDDR3_TRRD * nmhz + 999) / 1000);
-	pdram_timing->trrd = max(2, tmp);
+	pdram_timing->trrd = max(2U, tmp);
 	pdram_timing->tccd = LPDDR3_TCCD;
 	tmp = ((LPDDR3_TWTR * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->twtr = max(4, tmp);
+	pdram_timing->twtr = max(4U, tmp);
 	pdram_timing->trtw =  ((LPDDR3_TRTW * nmhz + 999) / 1000);
 	pdram_timing->tras_max = ((LPDDR3_TRAS_MAX * nmhz + 999) / 1000);
 	tmp = (LPDDR3_TFAW * nmhz + 999) / 1000;
-	pdram_timing->tfaw = max(8, tmp);
+	pdram_timing->tfaw = max(8U, tmp);
 	if (ddr_capability_per_die > 0x20000000) {
 		pdram_timing->trfc =
 			(LPDDR3_TRFC_8GBIT * nmhz + 999) / 1000;
@@ -812,8 +812,8 @@ static void lpddr3_get_parameter(struct timing_related_config *timing_config,
 			(LPDDR3_TRFC_4GBIT * nmhz + 999) / 1000;
 		tmp = (((LPDDR3_TRFC_4GBIT + 10) * nmhz + 999) / 1000);
 	}
-	pdram_timing->txsr = max(2, tmp);
-	pdram_timing->txsnr = max(2, tmp);
+	pdram_timing->txsr = max(2U, tmp);
+	pdram_timing->txsnr = max(2U, tmp);
 	/* tdqsck use rounded down */
 	pdram_timing->tdqsck =
 			((LPDDR3_TDQSCK_MIN * nmhz + (nmhz >> 1))
@@ -823,21 +823,21 @@ static void lpddr3_get_parameter(struct timing_related_config *timing_config,
 					/ 1000);
 	/*pd and sr*/
 	tmp = ((LPDDR3_TXP * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->txp = max(3, tmp);
+	pdram_timing->txp = max(3U, tmp);
 	pdram_timing->txpdll = LPDDR3_TXPDLL;
 	tmp = ((LPDDR3_TCKE * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->tcke = max(3, tmp);
+	pdram_timing->tcke = max(3U, tmp);
 	tmp = ((LPDDR3_TCKESR * nmhz + 999) / 1000);
-	pdram_timing->tckesr = max(3, tmp);
+	pdram_timing->tckesr = max(3U, tmp);
 	pdram_timing->tcksre = LPDDR3_TCKSRE;
 	pdram_timing->tcksrx = LPDDR3_TCKSRX;
 	/*mode register timing*/
 	pdram_timing->tmod = LPDDR3_TMOD;
 	tmp = ((LPDDR3_TMRD * nmhz + 999) / 1000);
-	pdram_timing->tmrd = max(10, tmp);
+	pdram_timing->tmrd = max(10U, tmp);
 	pdram_timing->tmrr = LPDDR3_TMRR;
 	tmp = ((LPDDR3_TRCD * nmhz + 999) / 1000);
-	pdram_timing->tmrri = max(3, tmp);
+	pdram_timing->tmrri = max(3U, tmp);
 	/* ODT */
 	pdram_timing->todton = (LPDDR3_TODTON * nmhz + (nmhz >> 1) + 999)
 				/ 1000;
@@ -848,7 +848,7 @@ static void lpddr3_get_parameter(struct timing_related_config *timing_config,
 	pdram_timing->tzqoper =
 		((LPDDR3_TZQCL * nmhz + 999) / 1000);
 	tmp = ((LPDDR3_TZQRESET * nmhz + 999) / 1000);
-	pdram_timing->tzqreset = max(3, tmp);
+	pdram_timing->tzqreset = max(3U, tmp);
 	/* write leveling */
 	pdram_timing->twlmrd = (LPDDR3_TWLMRD * nmhz + 999) / 1000;
 	pdram_timing->twlo = (LPDDR3_TWLO * nmhz + 999) / 1000;
@@ -1163,26 +1163,26 @@ static void lpddr4_get_parameter(struct timing_related_config *timing_config,
 	pdram_timing->trefi = (LPDDR4_TREFI_3_9_US * nmhz + 999) / 1000;
 	/* base timing */
 	tmp = ((LPDDR4_TRCD * nmhz + 999) / 1000);
-	pdram_timing->trcd = max(4, tmp);
+	pdram_timing->trcd = max(4U, tmp);
 	trppb_tmp = ((LPDDR4_TRP_PB * nmhz + 999) / 1000);
-	trppb_tmp = max(4, trppb_tmp);
+	trppb_tmp = max(4U, trppb_tmp);
 	pdram_timing->trppb = trppb_tmp;
 	trp_tmp = ((LPDDR4_TRP_AB * nmhz + 999) / 1000);
-	trp_tmp = max(4, trp_tmp);
+	trp_tmp = max(4U, trp_tmp);
 	pdram_timing->trp = trp_tmp;
 	tras_tmp = ((LPDDR4_TRAS * nmhz + 999) / 1000);
-	tras_tmp = max(3, tras_tmp);
+	tras_tmp = max(3U, tras_tmp);
 	pdram_timing->tras_min = tras_tmp;
 	pdram_timing->trc = (tras_tmp + trp_tmp);
 	tmp = ((LPDDR4_TRRD * nmhz + 999) / 1000);
-	pdram_timing->trrd = max(4, tmp);
+	pdram_timing->trrd = max(4U, tmp);
 	if (timing_config->bl == 32)
 		pdram_timing->tccd = LPDDR4_TCCD_BL16;
 	else
 		pdram_timing->tccd = LPDDR4_TCCD_BL32;
 	pdram_timing->tccdmw = 4 * pdram_timing->tccd;
 	tmp = ((LPDDR4_TWTR * nmhz + 999) / 1000);
-	pdram_timing->twtr = max(8, tmp);
+	pdram_timing->twtr = max(8U, tmp);
 	pdram_timing->trtw =  ((LPDDR4_TRTW * nmhz + 999) / 1000);
 	pdram_timing->tras_max = ((LPDDR4_TRAS_MAX * nmhz + 999) / 1000);
 	pdram_timing->tfaw = (LPDDR4_TFAW * nmhz + 999) / 1000;
@@ -1203,8 +1203,8 @@ static void lpddr4_get_parameter(struct timing_related_config *timing_config,
 		tmp = (((LPDDR4_TRFC_4GBIT + 7) * nmhz + (nmhz >> 1) +
 				999) / 1000);
 	}
-	pdram_timing->txsr = max(2, tmp);
-	pdram_timing->txsnr = max(2, tmp);
+	pdram_timing->txsr = max(2U, tmp);
+	pdram_timing->txsnr = max(2U, tmp);
 	/* tdqsck use rounded down */
 	pdram_timing->tdqsck =  ((LPDDR4_TDQSCK_MIN * nmhz +
 				(nmhz >> 1)) / 1000);
@@ -1213,47 +1213,47 @@ static void lpddr4_get_parameter(struct timing_related_config *timing_config,
 	pdram_timing->tppd = LPDDR4_TPPD;
 	/* pd and sr */
 	tmp = ((LPDDR4_TXP * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->txp = max(5, tmp);
+	pdram_timing->txp = max(5U, tmp);
 	tmp = ((LPDDR4_TCKE * nmhz + (nmhz >> 1) + 999) / 1000);
-	pdram_timing->tcke = max(4, tmp);
+	pdram_timing->tcke = max(4U, tmp);
 	tmp = ((LPDDR4_TESCKE * nmhz +
 		((nmhz * 3) / 4) +
 		999) / 1000);
-	pdram_timing->tescke = max(3, tmp);
+	pdram_timing->tescke = max(3U, tmp);
 	tmp = ((LPDDR4_TSR * nmhz + 999) / 1000);
-	pdram_timing->tsr = max(3, tmp);
+	pdram_timing->tsr = max(3U, tmp);
 	tmp = ((LPDDR4_TCMDCKE * nmhz +
 		((nmhz * 3) / 4) +
 		999) / 1000);
-	pdram_timing->tcmdcke = max(3, tmp);
+	pdram_timing->tcmdcke = max(3U, tmp);
 	pdram_timing->tcscke = ((LPDDR4_TCSCKE * nmhz +
 		((nmhz * 3) / 4) +
 		999) / 1000);
 	tmp = ((LPDDR4_TCKELCS * nmhz + 999) / 1000);
-	pdram_timing->tckelcs = max(5, tmp);
+	pdram_timing->tckelcs = max(5U, tmp);
 	pdram_timing->tcsckeh = ((LPDDR4_TCSCKEH * nmhz +
 		((nmhz * 3) / 4) +
 		999) / 1000);
 	tmp = ((LPDDR4_TCKEHCS * nmhz +
 		(nmhz >> 1) + 999) / 1000);
-	pdram_timing->tckehcs = max(5, tmp);
+	pdram_timing->tckehcs = max(5U, tmp);
 	tmp = ((LPDDR4_TMRWCKEL * nmhz + 999) / 1000);
-	pdram_timing->tmrwckel = max(10, tmp);
+	pdram_timing->tmrwckel = max(10U, tmp);
 	tmp = ((LPDDR4_TCKELCMD * nmhz + (nmhz >> 1) +
 		999) / 1000);
-	pdram_timing->tckelcmd = max(3, tmp);
+	pdram_timing->tckelcmd = max(3U, tmp);
 	tmp = ((LPDDR4_TCKEHCMD * nmhz + (nmhz >> 1) +
 		999) / 1000);
-	pdram_timing->tckehcmd = max(3, tmp);
+	pdram_timing->tckehcmd = max(3U, tmp);
 	tmp = ((LPDDR4_TCKELPD * nmhz + (nmhz >> 1) +
 		999) / 1000);
-	pdram_timing->tckelpd = max(3, tmp);
+	pdram_timing->tckelpd = max(3U, tmp);
 	tmp = ((LPDDR4_TCKCKEL * nmhz + (nmhz >> 1) +
 		999) / 1000);
-	pdram_timing->tckckel = max(3, tmp);
+	pdram_timing->tckckel = max(3U, tmp);
 	/* mode register timing */
 	tmp = ((LPDDR4_TMRD * nmhz + 999) / 1000);
-	pdram_timing->tmrd = max(10, tmp);
+	pdram_timing->tmrd = max(10U, tmp);
 	pdram_timing->tmrr = LPDDR4_TMRR;
 	pdram_timing->tmrri = pdram_timing->trcd + 3;
 	/* ODT */
@@ -1262,13 +1262,13 @@ static void lpddr4_get_parameter(struct timing_related_config *timing_config,
 	/* ZQ */
 	pdram_timing->tzqcal = (LPDDR4_TZQCAL * nmhz + 999) / 1000;
 	tmp = ((LPDDR4_TZQLAT * nmhz + 999) / 1000);
-	pdram_timing->tzqlat = max(8, tmp);
+	pdram_timing->tzqlat = max(8U, tmp);
 	tmp = ((LPDDR4_TZQRESET * nmhz + 999) / 1000);
-	pdram_timing->tzqreset = max(3, tmp);
+	pdram_timing->tzqreset = max(3U, tmp);
 	tmp = ((LPDDR4_TZQCKE * nmhz +
 		((nmhz * 3) / 4) +
 		999) / 1000);
-	pdram_timing->tzqcke = max(3, tmp);
+	pdram_timing->tzqcke = max(3U, tmp);
 	/* write leveling */
 	pdram_timing->twlmrd = LPDDR4_TWLMRD;
 	pdram_timing->twlo = (LPDDR4_TWLO * nmhz + 999) / 1000;
@@ -1287,9 +1287,9 @@ static void lpddr4_get_parameter(struct timing_related_config *timing_config,
 	/* FSP */
 	pdram_timing->tfc_long = (LPDDR4_TFC_LONG * nmhz + 999) / 1000;
 	tmp = (LPDDR4_TCKFSPE * nmhz + (nmhz >> 1) + 999) / 1000;
-	pdram_timing->tckfspe = max(4, tmp);
+	pdram_timing->tckfspe = max(4U, tmp);
 	tmp = (LPDDR4_TCKFSPX * nmhz + (nmhz >> 1) + 999) / 1000;
-	pdram_timing->tckfspx = max(4, tmp);
+	pdram_timing->tckfspx = max(4U, tmp);
 }
 
 /*

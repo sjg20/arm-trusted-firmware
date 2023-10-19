@@ -541,11 +541,11 @@ static void gen_rk3399_ctl_params_f0(struct timing_related_config
 			      pdram_timing->tras_min);
 
 		mmio_clrsetbits_32(CTL_REG(i, 31), 0xffu << 24,
-				   max(4, pdram_timing->trtp) << 24);
+				   max(4U, pdram_timing->trtp) << 24);
 		mmio_write_32(CTL_REG(i, 33), (pdram_timing->tcke << 24) |
 					      pdram_timing->tras_max);
 		mmio_clrsetbits_32(CTL_REG(i, 34), 0xff,
-				   max(1, pdram_timing->tckesr));
+				   max(1U, pdram_timing->tckesr));
 		mmio_clrsetbits_32(CTL_REG(i, 39),
 				   (0x3f << 16) | (0xff << 8),
 				   (pdram_timing->twr << 16) |
@@ -795,7 +795,7 @@ static void gen_rk3399_ctl_params_f1(struct timing_related_config
 		mmio_write_32(CTL_REG(i, 35), (pdram_timing->tcke << 24) |
 					      pdram_timing->tras_max);
 		mmio_clrsetbits_32(CTL_REG(i, 36), 0xff,
-				   max(1, pdram_timing->tckesr));
+				   max(1U, pdram_timing->tckesr));
 		mmio_clrsetbits_32(CTL_REG(i, 39), (0xffu << 24),
 				   (pdram_timing->trcd << 24));
 		mmio_clrsetbits_32(CTL_REG(i, 40), 0x3f, pdram_timing->twr);

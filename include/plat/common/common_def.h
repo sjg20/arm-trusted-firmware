@@ -12,6 +12,7 @@
 
 #include <platform_def.h>
 
+#if 0
 #define SZ_32				U(0x00000020)
 #define SZ_64				U(0x00000040)
 #define SZ_128				U(0x00000080)
@@ -42,6 +43,7 @@
 
 #define SZ_1G				U(0x40000000)
 #define SZ_2G				U(0x80000000)
+#endif
 
 /******************************************************************************
  * Required platform porting definitions that are expected to be common to

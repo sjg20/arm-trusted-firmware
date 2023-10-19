@@ -9,11 +9,11 @@
 #define UTILS_DEF_H
 
 #include <export/lib/utils_def_exp.h>
-
+#if 0
 /* Compute the number of elements in the given array */
 #define ARRAY_SIZE(a)				\
 	(sizeof(a) / sizeof((a)[0]))
-
+#endif
 #define IS_POWER_OF_TWO(x)			\
 	(((x) & ((x) - 1)) == 0)
 
@@ -22,10 +22,12 @@
 #define BIT_32(nr)			(U(1) << (nr))
 #define BIT_64(nr)			(ULL(1) << (nr))
 
+#if 0
 #ifdef __aarch64__
 #define BIT				BIT_64
 #else
 #define BIT				BIT_32
+#endif
 #endif
 
 /*
@@ -47,10 +49,12 @@
 	(((~UINT64_C(0)) << (l)) & (~UINT64_C(0) >> (64 - 1 - (h))))
 #endif
 
+#if 0
 #ifdef __aarch64__
 #define GENMASK				GENMASK_64
 #else
 #define GENMASK				GENMASK_32
+#endif
 #endif
 
 /*
@@ -98,11 +102,13 @@
 #define round_boundary(value, boundary)		\
 	((__typeof__(value))((boundary) - 1))
 
+#if 0
 #define round_up(value, boundary)		\
 	((((value) - 1) | round_boundary(value, boundary)) + 1)
 
 #define round_down(value, boundary)		\
 	((value) & ~round_boundary(value, boundary))
+#endif
 
 /* add operation together with checking whether the operation overflowed
  * The result is '*res',
