@@ -789,9 +789,7 @@ endif #(ARCH=aarch32)
 USE_LIBC ?= 1
 
 ifneq (${USE_LIBC},0)
-$(warning OVERRIDE_LIBC $(OVERRIDE_LIBC))
 ifeq (${OVERRIDE_LIBC},0)
-$(warning libc)
 include lib/libc/libc.mk
 endif
 endif # USE_LIBC
@@ -1494,7 +1492,10 @@ endif
 endif #(!ERROR_DEPRECATED)
 
 $(eval $(call MAKE_LIB_DIRS))
+
+ifneq (${USE_LIBC},0)
 $(eval $(call MAKE_LIB,c))
+endif
 
 # Expand build macros for the different images
 ifeq (${NEED_BL1},yes)

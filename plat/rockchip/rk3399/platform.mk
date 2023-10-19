@@ -75,7 +75,7 @@ include lib/coreboot/coreboot.mk
 
 $(warning USE_LIBFDT $(USE_LIBFDT))
 ifneq ($(USE_LIBFDT),0)
-# include lib/libfdt/libfdt.mk
+include lib/libfdt/libfdt.mk
 endif
 
 $(eval $(call add_define,PLAT_EXTRA_LD_SCRIPT))
