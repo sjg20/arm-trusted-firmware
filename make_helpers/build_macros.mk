@@ -555,6 +555,10 @@ endif
 # object file path, and prebuilt object file path.
 $(eval OBJS += $(MODULE_OBJS))
 
+$(LIB): $(OBJS)
+	@echo 'Building library'
+	$$(Q)$$(AR) cDPrsT $$@ \$(OBJS)
+
 $(ELF): $(OBJS) $(DEFAULT_LINKER_SCRIPT) $(LINKER_SCRIPTS) | $(1)_dirs libraries $(BL_LIBS)
 	$$(ECHO) "  LD      $$@"
 ifdef MAKE_BUILD_STRINGS
@@ -601,7 +605,9 @@ $(BIN): $(ELF)
 	@${ECHO_BLANK_LINE}
 
 .PHONY: $(1)
-ifeq ($(DISABLE_BIN_GENERATION),1)
+ifeq ($(USE_LIB),1)
+$(1): $(LIB)
+else ifeq ($(DISABLE_BIN_GENERATION),1)
 $(1): $(ELF) $(DUMP)
 else
 $(1): $(BIN) $(DUMP)

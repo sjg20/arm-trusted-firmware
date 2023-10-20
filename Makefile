@@ -429,7 +429,6 @@ include lib/compiler-rt/compiler-rt.mk
 BL_COMMON_SOURCES	+=	common/bl_common.c			\
 				common/tf_log.c				\
 				common/${ARCH}/debug.S			\
-				lib/${ARCH}/cache_helpers.S		\
 				lib/${ARCH}/misc_helpers.S		\
 				lib/extensions/pmuv3/${ARCH}/pmuv3.c	\
 				plat/common/plat_bl_common.c		\
@@ -438,8 +437,11 @@ BL_COMMON_SOURCES	+=	common/bl_common.c			\
 				plat/common/${ARCH}/platform_helpers.S	\
 				${COMPILER_RT_SRCS}
 
-ifeq (${ATF_LIB},1)
-BL_COMMON_SOURCES += drivers/console/multi_console.c
+$(warning USE_LIB ${USE_LIB})
+
+ifneq (${USE_LIB},1)
+BL_COMMON_SOURCES += drivers/console/multi_console.c \
+		lib/${ARCH}/cache_helpers.S
 endif
 
 ifeq ($(notdir $(CC)),armclang)

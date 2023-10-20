@@ -45,8 +45,6 @@ endif
 BL31_SOURCES	+=	${RK_GIC_SOURCES}				\
 			drivers/arm/cci/cci.c				\
 			drivers/ti/uart/aarch64/16550_console.S		\
-			drivers/delay_timer/delay_timer.c		\
-			drivers/delay_timer/generic_delay_timer.c	\
 			drivers/gpio/gpio.c				\
 			lib/cpus/aarch64/cortex_a53.S			\
 			lib/cpus/aarch64/cortex_a72.S			\
@@ -70,6 +68,11 @@ BL31_SOURCES	+=	${RK_GIC_SOURCES}				\
 			${RK_PLAT_SOC}/drivers/dram/dram.c		\
 			${RK_PLAT_SOC}/drivers/dram/dram_spec_timing.c	\
 			${RK_PLAT_SOC}/drivers/dram/suspend.c
+
+ifneq (${USE_LIB},1)
+BL31_SOURCES	+= \
+	drivers/delay_timer/delay_timer.c
+endif
 
 include lib/coreboot/coreboot.mk
 
